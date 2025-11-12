@@ -1,0 +1,10 @@
+{
+    "validFilePath": "tests/resources/sample_slide.ome.tiff",
+    "invalidFilePath": "tests/resources/invalid_slide.txt",
+    "tooLargeFilePath": "tests/resources/oversized_slide.ome.tiff",
+    "multiFilePaths": [
+      "tests/resources/sample_slide1.ome.tiff",
+      "tests/resources/sample_slide2.ome.tiff"
+    ]
+  }
+  

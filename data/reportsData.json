@@ -1,0 +1,50 @@
+{
+    "baseUrl": "https://f18848f2.prism-app.pages.dev",
+    "reports": {
+      "validYear": "2025",
+      "invalidYear": "2023",
+      "defaultYear": "2025",
+      "expectedTabs": ["STAINS", "USERS"],
+      "stainTypes": [
+        {
+          "name": "Immunohistochemistry",
+          "code": "IHC",
+          "expectedChartVisible": true,
+          "hasDownload": true
+        },
+        {
+          "name": "Hematoxylin and Eosin",
+          "code": "H&E",
+          "expectedChartVisible": true,
+          "hasDownload": true
+        },
+        {
+          "name": "Special Stain",
+          "code": "Special",
+          "expectedChartVisible": true,
+          "hasDownload": true
+        }
+      ]
+    },
+    "users": {
+      "validSearchKeyword": "pictor",
+      "invalidSearchKeyword": "inactive.user@example.com",
+      "defaultQuarter": "Q4 October - December 2025",
+      "expectedNoDataMessage": [
+        "No stain data available",
+        "No QC data available"
+      ]
+    },
+    "downloads": {
+      "yearlyReport": "Download Usage Report",
+      "ihcReport": "Download IHC Usage Report",
+      "heReport": "Download H&E Usage Report",
+      "specialReport": "Download Special Usage Report"
+    },
+    "network": {
+      "reportApiPattern": "/api/reports",
+      "stainApiPattern": "/api/reports/stains",
+      "userApiPattern": "/api/reports/users"
+    }
+  }
+  

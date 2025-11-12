@@ -1,0 +1,26 @@
+{
+  "baseUrl": "https://f18848f2.prism-app.pages.dev/dashboard",
+  "searchKeyword": "363409a7",
+  "stainCategories": ["IHC", "H&E", "Special"],
+  "defaultQuarter": "Q4 October - December 2025",
+  "networkPattern": "/api/organization-activity",
+  "expectedHeaders": [
+    "QC",
+    "Slide Name",
+    "Image Type",
+    "Date",
+    "Stains",
+    "Tissue Type",
+    "Species"
+  ],
+  "expectedMetrics": [
+    "Total WSI Slides Scanned",
+    "Total VSI Slides Stained",
+    "Total Downloads"
+  ],
+  "emptyStateMessages": [
+    "No slides available",
+    "Unknown",
+    "Failed"
+  ]
+}

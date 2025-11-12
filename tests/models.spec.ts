@@ -27,15 +27,11 @@ test.describe('Models Module - Stain Management', () => {
   // --------------------------------------------------------------
 
 
-test.only(' verify loader message behavior', async ({ modelsPage }) => {
-    await expect(modelsPage.loaderMessage).toBeVisible();
-    await expect(modelsPage.loaderMessage).toBeHidden({ timeout: 20000 });
-  });
 
   test('Load models and verify counts', async ({ page, modelsPage }) => {
    
     //capture network logs
-    const networkLogger = new NetworkLogger(page, 'response', '/slides');
+    const networkLogger = new NetworkLogger(page, 'response', '/models');
     await networkLogger.startLogging();
 
     await modelsPage.waitForModelsToLoad();
@@ -60,7 +56,7 @@ test.only(' verify loader message behavior', async ({ modelsPage }) => {
     await expect(page.getByText('Auto Restainer')).toBeVisible();
 
     const modelCards = page.locator('.model-card');
-    await expect(modelCards).toHaveCountGreaterThan(0);
+    await expect(modelCards).toHaveCount(6);
 
     // Validate metadata visibility
     await expect(page.getByText(/Version:/)).toBeVisible();
@@ -69,21 +65,17 @@ test.only(' verify loader message behavior', async ({ modelsPage }) => {
 
  test('Match Total Stainers Available count with model cards', async ({ modelsPage }) => {
     await modelsPage.waitForModelsToLoad();
-
     const labelCount = await modelsPage.getTotalStainersCountFromLabel();
     const actualCount = await modelsPage.getDisplayedModelCount();
     expect(labelCount).toBe(actualCount);
   });
  
-
   test('Toggle model ON/OFF successfully', async ({ modelsPage }) => {
     await modelsPage.waitForModelsToLoad();
-
     const index = 0;
     const before = await modelsPage.getModelToggleState(index);
     await modelsPage.toggleModel(index);
     const after = await modelsPage.getModelToggleState(index);
-
     expect(after).not.toBe(before);
   });
 
@@ -94,7 +86,6 @@ test.only(' verify loader message behavior', async ({ modelsPage }) => {
 
   test('Persist model state after reload', async ({ page, modelsPage }) => {
     await modelsPage.waitForModelsToLoad();
-
     const index = 1;
     const before = await modelsPage.getModelToggleState(index);
     await page.reload();
@@ -190,7 +181,7 @@ test.only(' verify loader message behavior', async ({ modelsPage }) => {
   test('Reflect model state changes across users', async ({ page, context }) => {
     // Simulate another user session
     const otherPage = await context.newPage();
-    await login(otherPage, process.env.EMAIL!, process.env.PASSWORD!);
+    await ensureLogin(otherPage);
     await otherPage.getByRole('link', { name: /Models/i }).click();
     const firstToggle = otherPage.getByRole('switch').first();
     await expect(firstToggle).toBeVisible();
@@ -218,6 +209,24 @@ test.only(' verify loader message behavior', async ({ modelsPage }) => {
     await toggle.click();
     const auditEntry = page.locator('.audit-log-entry');
     await expect(auditEntry).toBeVisible();
+  });
+
+  test('should intercept model API and increase model count dynamically', async ({ modelsPage }) => {
+    // Intercept and add 3 extra models
+    await modelsPage.interceptAndIncreaseModelCount(3);
+  
+    // Wait for the model list to load
+    await modelsPage.waitForModelsToLoad();
+  
+    // Verify total count increased (original + 3)
+    const modelCount = await modelsPage.getDisplayedModelCount();
+    expect(modelCount).toBeGreaterThanOrEqual(9); // assuming original count was 6
+  
+    // Verify total stainers message updates in UI
+    const totalStainersLabel = modelsPage.page.getByText(/Total Stainers Available/i);
+    await expect(totalStainersLabel).toContainText(String(modelCount));
+  
+    console.log(`✅ Model count successfully intercepted and increased to ${modelCount}`);
   });
 
 });

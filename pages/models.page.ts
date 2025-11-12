@@ -25,6 +25,8 @@ export class ModelsPage {
   autoDeepStainerHeading: Locator;
   autoRestainerHeading: Locator;
   pancMarker: Locator;
+  header: Locator;
+  loader: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -45,6 +47,8 @@ export class ModelsPage {
     this.autoDeepStainerHeading = page.getByRole('heading', { name: 'Auto Deep Stainer' });
     this.autoRestainerHeading = page.getByRole('heading', { name: 'Auto Restainer' });
     this.pancMarker = page.getByText('PanCK-MG-TRT(');
+    this.header = page.getByRole('heading', { name: /Stain Management/i });
+    this.loader = page.getByText(/Loading stain information/i);
   }
 
   // ---------- Reusable Functions ----------
@@ -52,7 +56,7 @@ export class ModelsPage {
   /** Wait until models are fully loaded */
   async waitForModelsToLoad(): Promise<void> {
     await expect(this.loaderMessage).toBeVisible();
-   // await expect(this.loaderMessage).toBeHidden({ timeout: 20000 });
+    await expect(this.loaderMessage).toBeHidden({ timeout: 20000 });
     // await expect(this.modelCards.first()).toBeVisible();
   }
 
@@ -139,4 +143,78 @@ export class ModelsPage {
     await expect(this.hematoxylinEosinStain.first()).toBeVisible();
     await expect(this.pancMarker).toBeVisible();
   }
+
+  async goto(): Promise<void> {
+    await this.page.getByRole('link', { name: /Models/i }).click();
+    await expect(this.page).toHaveURL(/models/);
+  }
+
+  async waitForLoad(): Promise<void> {
+    await expect(this.loader).toBeHidden({ timeout: 20000 });
+    await expect(this.header).toBeVisible();
+  }
+
+  async verifyModelList(): Promise<void> {
+    const count = await this.modelCards.count();
+    expect(count).toBeGreaterThan(0);
+  }
+
+  async simulateModelOutage(): Promise<void> {
+    console.log('⚙️ Simulating Model API outage...');
+    await this.page.route('**/api/models', async route => {
+      await route.fulfill({
+        status: 503,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'Model service not available' }),
+      });
+    });
+  
+    // Navigate to Models page to trigger the interception
+    await this.goto();
+    await expect(this.page.getByText(/Model service not available/i)).toBeVisible();
+    console.log('✅ Model outage simulated successfully');
+  }
+
+  /**
+ * Intercepts the /api/models endpoint and increases the model count.
+ * Useful for testing dynamic model rendering and frontend count display.
+ */
+async interceptAndIncreaseModelCount(extraModels = 3): Promise<void> {
+  console.log(`⚙️ Intercepting /api/models to add ${extraModels} new mock models...`);
+
+  await this.page.route('**/api/models', async route => {
+    // Fetch the real response first
+    const originalResponse = await route.fetch();
+    const originalBody = await originalResponse.json();
+
+    // Create mock models
+    const newModels = Array.from({ length: extraModels }).map((_, i) => ({
+      name: `Mock-Stain-${i + 1}`,
+      enabled: true,
+      description: 'Auto-generated mock stain for testing',
+    }));
+
+    // Merge existing + mock models
+    const updatedModels = [...originalBody.models, ...newModels];
+    const updatedResponse = {
+      ...originalBody,
+      models: updatedModels,
+      totalCount: updatedModels.length,
+    };
+
+    // Fulfill with modified data
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(updatedResponse),
+    });
+  });
+
+  // Navigate to trigger interception
+  await this.goto();
+
+  console.log('✅ Model interception applied, mock models added');
+}
+
+  
 }
