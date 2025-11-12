@@ -72,7 +72,7 @@ export class ActivityPage {
 
   // ---------- Actions ----------
   async gotoActivityPage(): Promise<void> {
-    await this.page.goto('https://f18848f2.prism-app.pages.dev/dashboard');
+    await this.page.goto();
     await expect(this.pageTitle).toBeVisible();
   }
 

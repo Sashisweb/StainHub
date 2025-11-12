@@ -32,7 +32,7 @@ export class LoginPage {
 
   /** Opens login page */
   async openApplication(): Promise<void> {
-    await this.page.goto('https://f18848f2.prism-app.pages.dev/');
+    await this.page.goto('');
   }
 
   /** Performs login with credentials */
@@ -64,7 +64,7 @@ export class LoginPage {
 
   /** Opens login page */
   async openLoginPage(): Promise<void> {
-    await this.page.goto('https://f18848f2.prism-app.pages.dev/login');
+    await this.page.goto('/login');
   }
 
   async expireSessionToken(): Promise<void> {

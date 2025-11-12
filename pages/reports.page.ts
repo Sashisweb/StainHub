@@ -118,12 +118,25 @@ export class ReportsPage {
     await expect(this.usersTab).toHaveAttribute('aria-selected', 'true');
   }
 
-  async validateUserReportElements(keyword: string): Promise<void> {
-    await this.userSearchInput.fill(keyword);
+  async validateUserReportElements(): Promise<void> {
+    // Wait for user report table to appear
+    const tableHeader = this.page.locator('.MuiTableHead-root th');
+    const userNameColumn = this.page.getByText(/User|Name/i);
+    const stainsColumn = this.page.getByText(/Stains/i);
+    const downloadsColumn = this.page.getByText(/Downloads/i);
+  
+    await expect(tableHeader.first()).toBeVisible({ timeout: 10000 });
+    await expect(userNameColumn).toBeVisible();
+    await expect(stainsColumn).toBeVisible();
+    await expect(downloadsColumn).toBeVisible();
+  
+    // Validate at least one user record is listed
+    const rows = this.page.locator('.MuiTableBody-root tr');
+    const count = await rows.count();
+    expect(count).toBeGreaterThan(0);
+  
+    console.log(`✅ User Report Table loaded with ${count} entries`);
   }
+  
 
-  async openUserDetails(): Promise<void> {
-    await this.viewUserButton.first().click();
-    await expect(this.userQuarterDropdown).toBeVisible();
-  }
 }

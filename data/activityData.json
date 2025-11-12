@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://f18848f2.prism-app.pages.dev/dashboard",
+  "baseUrl": "/dashboard",
   "searchKeyword": "363409a7",
   "stainCategories": ["IHC", "H&E", "Special"],
   "defaultQuarter": "Q4 October - December 2025",

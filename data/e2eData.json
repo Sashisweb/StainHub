@@ -1,19 +1,18 @@
 {
-    "validEmail": "qa.user@pictorlabs.ai",
-    "validPassword": "StrongPass@123",
-    "validSlidePath": "tests/data/slides/sample1.tiff",
-    "expectedSlideName": "VS_PanCK_363409a7.ome.tiff",
-    "multiSlidePaths": [
-      "tests/data/slides/sample2.tiff",
-      "tests/data/slides/sample3.tiff"
-    ],
-    "concurrentSlidePaths": [
-      "tests/data/slides/concurrent1.tiff",
-      "tests/data/slides/concurrent2.tiff",
-      "tests/data/slides/concurrent3.tiff"
-    ],
-    "stainType": "PanCK-MG-TRT",
-    "reportYear": "2025",
-    "modelUrl": "https://f18848f2.prism-app.pages.dev/models"
-  }
-  
+  "validEmail": "qa.user@pictorlabs.ai",
+  "validPassword": "StrongPass@123",
+  "validSlidePath": "tests/data/slides/sample1.tiff",
+  "expectedSlideName": "VS_PanCK_363409a7.ome.tiff",
+  "multiSlidePaths": [
+    "tests/data/slides/sample2.tiff",
+    "tests/data/slides/sample3.tiff"
+  ],
+  "concurrentSlidePaths": [
+    "tests/data/slides/concurrent1.tiff",
+    "tests/data/slides/concurrent2.tiff",
+    "tests/data/slides/concurrent3.tiff"
+  ],
+  "stainType": "PanCK-MG-TRT",
+  "reportYear": "2025",
+  "modelUrl": "/models"
+}
