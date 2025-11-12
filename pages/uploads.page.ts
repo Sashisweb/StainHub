@@ -60,7 +60,7 @@ export class UploadsPage {
 
   // ---------- Navigation ----------
   async gotoUploadsPage(): Promise<void> {
-    await this.page.getByRole('link', { name: /Uploads/i }).click();
+    await this.page.getByRole('button', { name: /Uploads/i }).click();
     await expect(this.page).toHaveURL(/uploads/);
     await expect(this.pageHeader).toBeVisible();
   }

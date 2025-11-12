@@ -10,7 +10,7 @@ test.describe('Organization Reports - Virtual Stain Hub', () => {
 
   // Verify structure, navigation, and overall stain data
   test('should display overall organization stain reports and validate year selection', async ({ reportsPage, page }) => {
-    const networkLogger = new NetworkLogger(page, 'all', '/api/reports');
+    const networkLogger = new NetworkLogger(page, 'all', '/analytics');
     await networkLogger.startLogging();
 
     await reportsPage.verifyOverallReportElements();

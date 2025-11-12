@@ -23,7 +23,7 @@ export class ReportsPage {
     this.pageTitle = page.getByRole('heading', { name: /Organization Reports/i });
     this.stainsTab = page.getByRole('tab', { name: /Stains/i });
     this.usersTab = page.getByRole('tab', { name: /Users/i });
-    this.yearDropdown = page.getByRole('combobox');
+    this.yearDropdown = page.locator('.MuiAutocomplete-root:has(label:has-text("Year")) input[role="combobox"]');
     this.downloadReportButton = page.getByRole('button', { name: /Download Usage Report/i });
     this.stainChart = page.locator('canvas, svg').first();
     this.stainCards = page.locator('.MuiAccordion-root');
@@ -37,7 +37,7 @@ export class ReportsPage {
 
   // ---------- Actions ----------
   async gotoReportsPage(): Promise<void> {
-    await this.page.goto('https://f18848f2.prism-app.pages.dev/reports');
+    await this.page.goto('/reports');
     await expect(this.pageTitle).toBeVisible();
   }
 
@@ -48,7 +48,12 @@ export class ReportsPage {
   }
 
   async selectYear(year: string): Promise<void> {
-    await this.yearDropdown.selectOption(year);
+    // Click to open the Autocomplete dropdown
+    await this.yearDropdown.click();
+    // Wait for options to appear and select by text
+    const option = this.page.locator('.MuiAutocomplete-popper li[role="option"], .MuiAutocomplete-listbox li[role="option"]').filter({ hasText: year });
+    await expect(option).toBeVisible({ timeout: 5000 });
+    await option.click();
     await expect(this.stainChart).toBeVisible();
   }
 

@@ -31,6 +31,7 @@ export class ActivityPage {
   expandedDate: Locator;
   backButton: Locator;
   noDataMessage: Locator;
+  quarterWiseStain: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -42,9 +43,9 @@ export class ActivityPage {
     this.totalStained = page.getByText(/Total VSI Slides Stained/i);
     this.totalDownloads = page.getByText(/Total Downloads/i);
     this.stainUsageOverview = page.getByText(/Stain Usage Overview/i);
-    this.stainCategoryRows = page.locator('.MuiTableBody-root tr');
+    this.stainCategoryRows = page.locator('.flex.items-center.mb-2');
     this.donutChart = page.locator('canvas, svg').first();
-    this.quarterDropdown = page.getByRole('combobox');
+    this.quarterDropdown = page.locator('.MuiAutocomplete-root input[role="combobox"]');
 
     // ---------- Organization Overview Locators ----------
     this.organizationOverviewHeader = page.getByText(/Organization Overview/i);
@@ -68,11 +69,12 @@ export class ActivityPage {
     this.noDataMessage = page.getByText(/No slides available|Unknown|Failed/i);
 
     this.backButton = page.locator('button, a').filter({ hasText: '<' });
+    this.quarterWiseStain = page.locator('.MuiAutocomplete-popper li[role="option"], .MuiAutocomplete-listbox li[role="option"]').nth(1);
   }
 
   // ---------- Actions ----------
   async gotoActivityPage(): Promise<void> {
-    await this.page.goto();
+    await this.page.goto('');
     await expect(this.pageTitle).toBeVisible();
   }
 
@@ -89,7 +91,9 @@ export class ActivityPage {
 
   async verifyChartAndQuarter(): Promise<void> {
     await expect(this.donutChart).toBeVisible();
-    await this.quarterDropdown.selectOption({ index: 1 });
+    await this.quarterDropdown.click();
+    await expect(this.quarterWiseStain).toBeVisible({ timeout: 5000 });
+    await this.quarterWiseStain.click();
   }
 
   async verifyStainOverviewRows(): Promise<void> {

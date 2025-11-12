@@ -68,7 +68,7 @@ export class LoginPage {
   }
 
   async expireSessionToken(): Promise<void> {
-    console.log('🕒 Simulating token expiry...');
+    console.log('Simulating token expiry...');
     await this.page.evaluate(() => {
       const token = localStorage.getItem('authToken');
       if (token) {
@@ -76,21 +76,21 @@ export class LoginPage {
         localStorage.setItem('authToken', expiredToken);
       }
     });
-    console.log('⚠️ Token manually expired in localStorage');
+    console.log('Token manually expired in localStorage');
   }
 
   async refreshAndValidateReauth(): Promise<void> {
-    console.log('🔄 Refreshing page to validate reauthentication...');
+    console.log('Refreshing page to validate reauthentication...');
     await this.page.reload();
     await this.page.waitForTimeout(2000);
   
     // Expect redirect to login or auto re-login
     const loginField = this.page.locator('input[placeholder="Email"], input[type="email"]');
     if (await loginField.isVisible()) {
-      console.log('🔐 Session expired - redirected to login page');
+      console.log('Session expired - redirected to login page');
       await expect(loginField).toBeVisible();
     } else {
-      console.log('✅ Token refreshed successfully, still authenticated');
+      console.log('Token refreshed successfully, still authenticated');
       await expect(this.page.getByText(/Dashboard|Organization Activity/i)).toBeVisible();
     }
   }
