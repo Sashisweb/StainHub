@@ -1,0 +1,19 @@
+# Ignore environment secrets
+.env
+
+# Node.js dependencies
+node_modules/
+
+# Playwright reports and artifacts
+test-results/
+playwright-report/
+blob-report/
+trace.zip
+
+# Compiled TS files
+dist/
+*.js.map
+
+# OS-specific files
+.DS_Store
+Thumbs.db

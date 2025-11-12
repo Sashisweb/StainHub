@@ -1,0 +1,2 @@
+⬅️ [GET] https://development.api.prism.deepstain.com/api/slides/analytics/?organization_id=org_1gI7ynRz8sGSoIxl — 200
+⬅️ [GET] https://development.api.prism.deepstain.com/api/slides/?limit=10&offset=0&page=0&size=10&ordering=-created_at&organization_id=org_1gI7ynRz8sGSoIxl — 200
