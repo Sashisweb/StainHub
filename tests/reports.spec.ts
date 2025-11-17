@@ -18,7 +18,8 @@ test.describe('Organization Reports - Virtual Stain Hub', () => {
     await expect(reportsPage.downloadReportButton).toBeVisible();
     await reportsPage.downloadReportButton.click();
 
-    await page.waitForTimeout(2000);
+    // Wait for download to complete
+    await page.waitForLoadState('networkidle');
     networkLogger.printLogs();
   });
 

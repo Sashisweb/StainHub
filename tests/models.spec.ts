@@ -125,7 +125,7 @@ test.describe('Models Module - Stain Management', () => {
   test('Restrict access for unauthorized users', async ({ page, context }) => {
     // Simulate a new unauthenticated session
     const newPage = await context.newPage();
-    await newPage.goto('https://f18848f2.prism-app.pages.dev/models');
+    await newPage.goto('/models');
     await expect(newPage).toHaveURL(/login|dashboard/);
   });
 

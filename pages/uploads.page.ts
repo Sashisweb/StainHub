@@ -82,7 +82,7 @@ export class UploadsPage {
     await this.fileInput.setInputFiles(filePath);
     await this.uploadButton.click();
     await expect(this.uploadProgress).toBeVisible({ timeout: 30000 });
-    await this.page.waitForSelector('text=Upload completed', { timeout: 5 * 60 * 1000 });
+    await expect(this.uploadStatus).toHaveText(/Upload completed/i, { timeout: 300000 }); // 5 minutes
   }
 
   async uploadInvalidFile(filePath: string): Promise<void> {
@@ -147,7 +147,7 @@ export class UploadsPage {
   }
 
   async waitForUploadCompletion(expectedSlideName: string): Promise<void> {
-    await this.page.waitForSelector(`text=${expectedSlideName}`, { timeout: 5 * 60 * 1000 });
+    await expect(this.page.getByText(expectedSlideName)).toBeVisible({ timeout: 300000 }); // 5 minutes
   }
 
   async verifyUploadSuccess(): Promise<void> {

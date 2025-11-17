@@ -82,11 +82,11 @@ export class LoginPage {
   async refreshAndValidateReauth(): Promise<void> {
     console.log('Refreshing page to validate reauthentication...');
     await this.page.reload();
-    await this.page.waitForTimeout(2000);
+    await this.page.waitForLoadState('networkidle');
   
     // Expect redirect to login or auto re-login
     const loginField = this.page.locator('input[placeholder="Email"], input[type="email"]');
-    if (await loginField.isVisible()) {
+    if (await loginField.isVisible({ timeout: 5000 }).catch(() => false)) {
       console.log('Session expired - redirected to login page');
       await expect(loginField).toBeVisible();
     } else {

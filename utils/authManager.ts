@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import jwt from 'jsonwebtoken'; // Optional, helps verify token expiry safely
+import { Page } from '@playwright/test';
 
 export class AuthManager {
   private static tokenFile = path.join(__dirname, '../localstorage.json');
@@ -68,7 +69,7 @@ export class AuthManager {
   /**
    * Loads Auth0 localStorage tokens into the browser context
    */
-  static async loadLocalStorage(page: any) {
+  static async loadLocalStorage(page: Page) {
     if (!fs.existsSync(this.tokenFile)) {
       console.log('⚠️ No localstorage.json file found');
       return;
@@ -77,6 +78,7 @@ export class AuthManager {
     const raw = fs.readFileSync(this.tokenFile, 'utf-8');
     const data: Record<string, string> = JSON.parse(raw);
 
+    // Use baseURL from config or environment variable
     const baseUrl = process.env.BASE_URL || 'https://f18848f2.prism-app.pages.dev';
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
 
@@ -92,7 +94,7 @@ export class AuthManager {
   /**
    * Save current browser localStorage after successful login
    */
-  static async saveLocalStorage(page: any) {
+  static async saveLocalStorage(page: Page) {
     const storage = await page.evaluate(() => {
       const store: Record<string, string> = {};
       for (let i = 0; i < localStorage.length; i++) {

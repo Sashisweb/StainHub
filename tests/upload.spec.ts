@@ -138,8 +138,8 @@ test.describe('Uploads Module - Virtual Stain Hub', () => {
     // Perform a valid upload
     await uploadsPage.uploadFile(uploadData.validFilePath);
   
-    // Wait briefly to ensure network activity completes
-    await page.waitForTimeout(3000);
+    // Wait for network activity to complete
+    await page.waitForLoadState('networkidle');
   
     // Print and save logs
     networkLogger.printLogs();

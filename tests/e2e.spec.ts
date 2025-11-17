@@ -133,7 +133,7 @@ test.describe('Virtual Stain Hub - End-to-End User Flow', () => {
     await loginPage.expireSessionToken();
 
     // Try accessing restricted page after expiry
-    await page.goto('https://f18848f2.prism-app.pages.dev/models');
+    await page.goto('/models');
     await loginPage.refreshAndValidateReauth();
     await expect(loginPage.dashboardTitle).toBeVisible();
   });

@@ -29,6 +29,10 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright E2E Tests
+        # provide secrets to the job's environment
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: npx playwright test --reporter=html
 
       - name: Upload Playwright Report
