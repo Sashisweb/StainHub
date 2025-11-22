@@ -213,7 +213,7 @@ async interceptAndIncreaseModelCount(extraModels = 3): Promise<void> {
   // Navigate to trigger interception
   await this.goto();
 
-  console.log('✅ Model interception applied, mock models added');
+  console.log('Model interception applied, mock models added');
 }
 
   

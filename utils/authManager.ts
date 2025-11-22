@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'; // Optional, helps verify token expiry safely
 import { Page } from '@playwright/test';
 
 export class AuthManager {
-  private static tokenFile = path.join(__dirname, '../localstorage.json');
+  private static tokenFile = path.join(__dirname, '../auth/localstorage.json');
 
   /**
    * Checks whether a valid Auth0 token exists in localstorage.json

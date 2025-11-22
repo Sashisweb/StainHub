@@ -17,3 +17,6 @@ dist/
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+IMPROVEMENTS_APPLIED.md
+PLAYWRIGHT_REVIEW.md

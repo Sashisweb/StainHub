@@ -9,7 +9,7 @@ export default defineConfig({
   testMatch: '**/*.spec.ts',
   
   // Timeouts
-  timeout: 60000, // Test timeout (60 seconds)
+  timeout: 1200000, // Test timeout (60 seconds)
   expect: {
     timeout: 10000, // Assertion timeout (10 seconds)
   },

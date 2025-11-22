@@ -34,14 +34,14 @@ export class NetworkLogger {
 
         const req = response.request();
         const status = response.status();
-        this.logs.push(`⬅️ [${req.method()}] ${url} — ${status}`);
+        this.logs.push(`[${req.method()}] ${url} — ${status}`);
 
         if (url.includes('/slides')) {
           try {
             const body = await response.text();
-            console.log(`🧩 API Response for ${url}:\n${body}`);
+            console.log(`API Response for ${url}:\n${body}`);
           } catch {
-            console.log(`⚠️ Could not read response body for ${url}`);
+            console.log(`Could not read response body for ${url}`);
           }
         }
       });

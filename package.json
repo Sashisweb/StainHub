@@ -1,15 +1,17 @@
 {
   "name": "stainhub",
   "version": "1.0.0",
-  "description": "",
+  "description": "Playwright automation with AWS SDK, MySQL, Kafka, Axios, and TypeScript",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
-    "test:report": "playwright show-report",
-    "test:codegen": "playwright codegen"
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:chrome": "npx playwright test --project=chromium",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug",
+    "test:report": "npx playwright show-report",
+    "test:codegen": "npx playwright codegen",
+    "codegen": "npx playwright codegen"
   },
   "repository": {
     "type": "git",
@@ -23,16 +25,31 @@
     "url": "https://github.com/Sashisweb/StainHub/issues"
   },
   "homepage": "https://github.com/Sashisweb/StainHub#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "mysql2": "^3.9.7",
+    "kafkajs": "^2.2.4",
+    "axios": "^1.7.9",
+    "jsonwebtoken": "^9.0.2",
+    "@aws-sdk/client-s3": "^3.669.0",
+    "@aws-sdk/client-secrets-manager": "^3.669.0",
+    "@aws-sdk/client-batch": "^3.669.0",
+    "@aws-sdk/client-lambda": "^3.669.0",
+    "@aws-sdk/client-athena": "^3.669.0",
+    "@aws-sdk/client-sqs": "^3.669.0",
+    "@aws-sdk/client-sts": "^3.669.0",
+    "@aws-sdk/credential-providers": "^3.669.0",
+    "@smithy/node-http-handler": "^3.0.0"
+  },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
+    "@types/node": "^24.1.0",
     "@types/jsonwebtoken": "^9.0.10",
-    "dotenv": "^17.2.3",
+    "allure-playwright": "^3.4.2",
+    "cypress": "^15.5.0",
     "eslint": "^9.39.1",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "jsonwebtoken": "^9.0.2"
   }
 }

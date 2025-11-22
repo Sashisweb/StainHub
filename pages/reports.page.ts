@@ -140,7 +140,7 @@ export class ReportsPage {
     const count = await rows.count();
     expect(count).toBeGreaterThan(0);
   
-    console.log(`✅ User Report Table loaded with ${count} entries`);
+    console.log(`User Report Table loaded with ${count} entries`);
   }
   
 

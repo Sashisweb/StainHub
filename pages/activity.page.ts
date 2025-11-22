@@ -33,6 +33,7 @@ export class ActivityPage {
   noDataMessage: Locator;
   quarterWiseStain: Locator;
 
+
   constructor(page: Page) {
     this.page = page;
 
@@ -99,6 +100,18 @@ export class ActivityPage {
   async verifyStainOverviewRows(): Promise<void> {
     await expect(this.stainUsageOverview).toBeVisible();
     await expect(this.stainCategoryRows.first()).toBeVisible();
+  }
+
+  async verifyUploadSlidesEnabled():Promise<void> {
+    await expect(this.uploadSlidesButton).toBeVisible();
+    await expect(this.uploadSlidesButton).toBeEnabled();
+    
+  }
+
+  async verifyUploadSlidesDisabled():Promise<void> {
+    await expect(this.uploadSlidesButton).toBeVisible();
+    await expect(this.uploadSlidesButton).toBeDisabled();
+    
   }
 
   async switchTab(tab: 'Slides' | 'Projects'): Promise<void> {

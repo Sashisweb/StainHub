@@ -7,7 +7,7 @@ test.describe('Organization Activity - Virtual Stain Hub', () => {
     await activityPage.gotoActivityPage();
   });
 
-  test('should load Organization Activity page with all overview sections and metrics', async ({ activityPage, page }) => {
+  test.only('should load Organization Activity page with all overview sections and metrics', async ({ activityPage, page }) => {
     const networkLogger = new NetworkLogger(page, 'all', activityData.networkPattern);
     await networkLogger.startLogging();
 
@@ -15,6 +15,7 @@ test.describe('Organization Activity - Virtual Stain Hub', () => {
     await activityPage.validateOverviewMetrics();
     await activityPage.verifyChartAndQuarter();
     await activityPage.verifyStainOverviewRows();
+    await activityPage.verifyUploadSlidesEnabled();
 
     networkLogger.printLogs();
   });

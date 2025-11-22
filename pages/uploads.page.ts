@@ -79,8 +79,8 @@ export class UploadsPage {
 
   // ---------- Upload Actions ----------
   async uploadFile(filePath: string): Promise<void> {
-    await this.fileInput.setInputFiles(filePath);
     await this.uploadButton.click();
+    await this.fileInput.setInputFiles(filePath);
     await expect(this.uploadProgress).toBeVisible({ timeout: 30000 });
     await expect(this.uploadStatus).toHaveText(/Upload completed/i, { timeout: 300000 }); // 5 minutes
   }
@@ -179,16 +179,16 @@ export class UploadsPage {
     const uploadedFileRow = this.page.locator(`text=${fileName}`);
     await expect(uploadedFileRow).toBeVisible({ timeout: 15000 });
     await expect(uploadedFileRow).toHaveText(fileName);
-    console.log(`✅ Upload history contains: ${fileName}`);
+    console.log(`Upload history contains: ${fileName}`);
   }
 
   async verifyBatchUploadSuccess(): Promise<void> {
-    console.log('🧩 Verifying batch uploads success...');
+    console.log('Verifying batch uploads success...');
     const successBadge = this.page.locator('text=Upload completed, Upload successful').first();
     const rows = this.page.locator('.upload-row, .MuiTableBody-root tr');
     await expect(rows.first()).toBeVisible();
     await expect(successBadge.or(rows)).toBeVisible();
-    console.log('✅ Batch upload success verified');
+    console.log('Batch upload success verified');
   }
 
 }
